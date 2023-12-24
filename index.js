@@ -24,3 +24,13 @@ console.log(sum(2,3),"and", diff(5,3));
 
 // make sure to always use async code to save as much time as u can 
 // because ik sync code bhout time consuming hota hai.
+
+
+
+
+// ab bhi ik dikat yeh hai k server ko baar baar open kr close kr
+//  so irritating
+//  so use nodemon
+console.log(sum(2,3),"and", diff(5,3));
+console.log(sum(2,3),"and", diff(5,3));
+console.log(sum(2,3),"and", diff(5,3));
