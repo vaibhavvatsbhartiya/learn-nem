@@ -1,36 +1,23 @@
-// pahle use hota tha 
-// const lib = require('./lib');
+import http from "node:http";
+import * as fs from "node:fs";
 
+const index = fs.readFileSync("index.html", "Utf-8");
 
-//  but ab
-import { sum, diff } from "./lib.js";
-import * as fs from 'node:fs';
+// Create a local server to receive data from
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { "Content-Type": "application/json" }); // Header ko define kr ja rha hai
+  // Node bhout dumb hai so we use "JSON.stringify" method
+  // To set data as string otherwise vo error d deta apne ko
 
-
-
-// const txt = fs.readFileSync('demo.txt', "Utf-8"); // read our file but have to specify the format
-// console.log(txt);
-// but the problem is k yeh bhout time consuming hai if file bhout bde hai ya server ko request kr rahe hsi data k liye 
-
-
-// to solve this problem we need to use callbacks or promises 
-// here i use callback 
-fs.readFile('demo.txt', "Utf-8", (err, data) =>{
-    console.log(data);
+  //   res.end(JSON.stringify({
+  //     data: 'Hello World!',
+  //   }));
+  res.writeHead(200, { "Content-Type": "text/html" });
+  res.end(index);
 });
 
-console.log(sum(2,3),"and", diff(5,3));
+server.listen(8000);
 
 
-// make sure to always use async code to save as much time as u can 
-// because ik sync code bhout time consuming hota hai.
-
-
-
-
-// ab bhi ik dikat yeh hai k server ko baar baar open kr close kr
-//  so irritating
-//  so use nodemon
-console.log(sum(2,3),"and", diff(5,3));
-console.log(sum(2,3),"and", diff(5,3));
-console.log(sum(2,3),"and", diff(5,3));
+// Reference
+// https://nodejs.org/docs/latest/api/http.html#httpcreateserveroptions-requestlistener
