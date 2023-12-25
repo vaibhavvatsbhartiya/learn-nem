@@ -1,7 +1,0 @@
-GET
-POST
-PUT
-DELETE
-PATCH
-
-// these are also known as request line

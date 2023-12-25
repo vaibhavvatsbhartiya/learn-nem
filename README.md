@@ -4,8 +4,8 @@ In this repo some necessary topics according to tutorial are covered.
 
 ## Topics Covered
 1. Modules, Packages, NPM
-2. Server Concept With Node (about this topic this branch is.)
-3. Web Server ~ Express JS
+2. Server Concept With Node 
+3. Web Server ~ Express JS (about this topic this branch is.)
 4. REST API ~ Express JS
 5. File Stracture MVC
 6. Mongo DB
