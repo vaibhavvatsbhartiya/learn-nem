@@ -1,5 +1,6 @@
 import http from "node:http";
 import * as fs from "node:fs";
+import { threadId } from "node:worker_threads";
 
 const index = fs.readFileSync("index.html", "Utf-8");
 
@@ -70,3 +71,23 @@ server.listen(8000);
 // 1. Unexpected token 'export'
 // 2. Cannot use import statement outside a module (at VM6:5:1)
 // 3. loadTimeData is not defined at HTMLDocument.onDocumentLoad (VM7:265:31)
+
+// error kaise hata pta nhi
+// bs style.css ko hata k sb index.html m he css ko kr diya add because 
+
+// error aa rha tha
+
+// /product/style.css GET
+// undefined
+// file:///C:/Users/Ashish%20vats/Desktop/learn-nem/index.js:22
+//           let modifiedIndex = index.replace('**title**', product.title)
+//                                                                  ^
+
+// TypeError: Cannot read properties of undefined (reading 'title')
+//     at Server.<anonymous> (file:///C:/Users/Ashish%20vats/Desktop/learn-nem/index.js:22:66)
+//     at Server.emit (node:events:514:28)
+//     at parserOnIncoming (node:_http_server:1107:12)
+//     at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
+
+// Node.js v18.17.0
+// [nodemon] app crashed - waiting for file changes before starting...
