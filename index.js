@@ -65,3 +65,8 @@ server.listen(8000);
 
 //  Hala ki mane code copy kr k use krne ka try kra but ik baat toh smz m aa giyee k 
 // node js k help s server create krna complex hai bhout
+
+
+// 1. Unexpected token 'export'
+// 2. Cannot use import statement outside a module (at VM6:5:1)
+// 3. loadTimeData is not defined at HTMLDocument.onDocumentLoad (VM7:265:31)
