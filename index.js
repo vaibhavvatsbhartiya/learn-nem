@@ -13,81 +13,72 @@ const products = data.products;
 const express  = pkg;
 const server = express();
 
-// Middleware 
-// ----------------uses----------------
-// 1. Execute any code.
-// 2. Make changes to the request and the response objects.
-// 3. End the request-response cycle.
-// 4. Call the next middleware in the stack.
-
-// server.use((req, res, next) => {
-//   console.log(req.method, req.ip); //agr itna likha toh yeh chalta hr rahe ga but
-//   next() // ab aage wale functions ka use kr lega 
-// })
-
 
 //bodyParser
 server.use(express.json());
-// server.use(express.urlencoded());
-server.use(morgan('default'));
+server.use(morgan('default'))
+server.use(express.static('public'));
 
 
-// server.use(express.static('public')); // ab public folder m jo bhi hai usko direct access kra ja skta hai 
-// server.use((req, res, next) => {
-//   console.log(
-//     req.method,
-//     req.ip,
-//     req.hostname,
-//     new Date(),
-//     req.get('User-Agent')
-//   );
-//   next();
-// });
-
-const auth = (req, res, next) => {
-  // console.log(req.query);
-
-  // if (req.body.password == '123') {
-  //   next();
-  // } else {
-  //   res.sendStatus(401);
-  // }
-  next()
- 
-};
-
-// Modified ho and data ko get krene k lie parameter k need ho tb use kr skte hai
-server.get('/', (req, res)=>{
-  res.json({"type":"GET"})
-})
-
-// AB YEH APN DEKH SKTE HAI K IK HE URL PR 5 ALG ALG *RESPONSE* GENERATE KRA JA RHA HAI
-// ALSO ISKO APN *API*-endpoint ya route bhi bolte hai
-server.get('/', (req, res)=>{
-  res.json({"type":"GET"})
-})
-server.post('/', (req, res)=>{
-  res.json({"type":"POST"})
-})
-server.put('/', (req, res)=>{
-  res.json({"type":"PUT"})
-})
-server.get('/', (req, res)=>{
-  res.delete({"type":"DELETE"})
-})
-server.patch('/', (req, res)=>{
-  res.json({"type":"PATCH"})
-})
-// Postman ka use kr k in ko ache s smza ja skta hai
-
-// res cmd used 
-server.get('/', (req, res) => { 
-  // res.send('<h1>Home page</h1>'); 
-  // res.json(products);
-  res.status(201).send('<h1>Home page</h1>');
-}); 
 
 
+// API - Endpoint - Route
+
+// Products
+// API ROOT , base URL, example - google.com/api/v2/
+
+//Create POST /products     C R U D
+server.post('/products', (req, res) => {
+  console.log(req.body);
+  products.push(req.body);
+  res.status(201).json(req.body);
+});
+
+
+
+// Read GET /products
+server.get('/products', (req, res) => {
+  res.json(products);
+});
+
+// Read GET /products/:id
+server.get('/products/:id', (req, res) => {
+  const id = +req.params.id;
+  const product = products.find(p=>p.id===id)
+  res.json(product);
+});
+
+// Update PUT /products/:id
+server.put('/products/:id', (req, res) => {
+  const id = +req.params.id;
+  const productIndex = products.findIndex(p=>p.id===id)
+  products.splice(productIndex,1,{...req.body, id:id})
+  res.status(201).json();
+});
+// Update PATCH /products/:id
+server.patch('/products/:id', (req, res) => {
+  const id = +req.params.id;
+  const productIndex = products.findIndex(p=>p.id===id)
+  const product = products[productIndex];
+  products.splice(productIndex,1,{...product,...req.body})
+  res.status(201).json();
+});
+// Delete DELETE /products/:id
+server.delete('/products/:id', (req, res) => {
+  const id = +req.params.id;
+  const productIndex = products.findIndex(p=>p.id===id)
+  const product = products[productIndex];
+  products.splice(productIndex,1)
+  res.status(201).json(product);
+});
+
+
+server.get('/demo', (req, res) => {
+  // res.sendStatus(404);
+  // res.json(products)
+  // res.status(201).send('<h1>hello</h1>')
+  // res.sendFile('/Users/abhishekrathore/Desktop/node-app/index.html')
+});
 
 
 
