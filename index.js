@@ -1,18 +1,12 @@
 // import http from "node:http";  // http ki need nhi hai while we are using express js
 import pkg from 'express';
-import * as fs from "node:fs";
 import morgan from 'morgan';
-
-// file stracture s related hai yeh kooch
-const index = fs.readFileSync("index.html", "Utf-8");
-const data = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
-const products = data.products;
+import * as controllerProduct from './controller/products';
 
 
 // created a server using Express js and follow ES6 rules
 const express  = pkg;
 const server = express();
-
 
 //bodyParser
 server.use(express.json());
@@ -20,68 +14,34 @@ server.use(morgan('default'))
 server.use(express.static('public'));
 
 
-
-
-// API - Endpoint - Route
-
-// Products
-// API ROOT , base URL, example - google.com/api/v2/
-
 //Create POST /products     C R U D
-server.post('/products', (req, res) => {
-  console.log(req.body);
-  products.push(req.body);
-  res.status(201).json(req.body);
-});
 
-
-
-// Read GET /products
-server.get('/products', (req, res) => {
-  res.json(products);
-});
-
-// Read GET /products/:id
-server.get('/products/:id', (req, res) => {
-  const id = +req.params.id;
-  const product = products.find(p=>p.id===id)
-  res.json(product);
-});
-
-// Update PUT /products/:id
-server.put('/products/:id', (req, res) => {
-  const id = +req.params.id;
-  const productIndex = products.findIndex(p=>p.id===id)
-  products.splice(productIndex,1,{...req.body, id:id})
-  res.status(201).json();
-});
-// Update PATCH /products/:id
-server.patch('/products/:id', (req, res) => {
-  const id = +req.params.id;
-  const productIndex = products.findIndex(p=>p.id===id)
-  const product = products[productIndex];
-  products.splice(productIndex,1,{...product,...req.body})
-  res.status(201).json();
-});
-// Delete DELETE /products/:id
-server.delete('/products/:id', (req, res) => {
-  const id = +req.params.id;
-  const productIndex = products.findIndex(p=>p.id===id)
-  const product = products[productIndex];
-  products.splice(productIndex,1)
-  res.status(201).json(product);
-});
-
-
-server.get('/demo', (req, res) => {
-  // res.sendStatus(404);
-  // res.json(products)
-  // res.status(201).send('<h1>hello</h1>')
-  // res.sendFile('/Users/abhishekrathore/Desktop/node-app/index.html')
-});
-
+server
+  .post('/products', controllerProduct.createProduct)
+  .get('/products/:id', controllerProduct.readProduct)
+  .put('/products/:id', controllerProduct.updateProduct)
+  .patch('/products/:id', controllerProduct.updateProductPatch)
+  .delete('/products/:id', controllerProduct.deleteProduct);
 
 
 server.listen(3000, ()=>{
   console.log("Server Started and Hello V2");
 })
+
+
+// error aa rha hai
+// and mere according toh import statement ok hai
+
+// Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'C:\Users\Ashish vats\Desktop\learn-nem\controller\products' imported from C:\Users\Ashish vats\Desktop\learn-nem\index.js
+// Did you mean to import ../controller/products.js?
+//     at new NodeError (node:internal/errors:405:5)
+//     at finalizeResolution (node:internal/modules/esm/resolve:324:11)
+//     at moduleResolve (node:internal/modules/esm/resolve:943:10)
+//     at defaultResolve (node:internal/modules/esm/resolve:1129:11)
+//     at nextResolve (node:internal/modules/esm/loader:163:28)
+//     at ESMLoader.resolve (node:internal/modules/esm/loader:835:30)
+//     at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+//     at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:77:40)
+//     at link (node:internal/modules/esm/module_job:76:36) {
+//   code: 'ERR_MODULE_NOT_FOUND'
+// }
