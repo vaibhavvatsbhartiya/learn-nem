@@ -5,12 +5,12 @@ import { Router } from 'express';
 // created a server using Express js and follow ES6 rules
 const express  = pkg;
 
- export const productRouter = express.Router();
+ export const prodRoute = express.Router();
 
 
 productRouter
-  .post('/products', controllerProduct.createProduct)
-  .get('/products/:id', controllerProduct.readProduct)
-  .put('/products/:id', controllerProduct.updateProduct)
-  .patch('/products/:id', controllerProduct.updateProductPatch)
-  .delete('/products/:id', controllerProduct.deleteProduct);
+  .post('/', controllerProduct.createProduct)
+  .get('/:id', controllerProduct.readProduct)
+  .put('/:id', controllerProduct.updateProduct)
+  .patch('/:id', controllerProduct.updateProductPatch)
+  .delete('/:id', controllerProduct.deleteProduct);

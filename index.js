@@ -1,8 +1,7 @@
 // import http from "node:http";  // http ki need nhi hai while we are using express js
 import pkg from 'express';
 import morgan from 'morgan';
-import * as controllerProduct from './controller/products';
-
+import { prodRoute } from './routes/route';
 
 // created a server using Express js and follow ES6 rules
 const express  = pkg;
@@ -15,14 +14,7 @@ server.use(express.static('public'));
 
 
 //Create POST /products     C R U D
-
-server
-  .post('/products', controllerProduct.createProduct)
-  .get('/products/:id', controllerProduct.readProduct)
-  .put('/products/:id', controllerProduct.updateProduct)
-  .patch('/products/:id', controllerProduct.updateProductPatch)
-  .delete('/products/:id', controllerProduct.deleteProduct);
-
+server.use('/products', prodRoute.route)
 
 server.listen(3000, ()=>{
   console.log("Server Started and Hello V2");
