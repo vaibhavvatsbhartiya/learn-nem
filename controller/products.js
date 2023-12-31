@@ -44,5 +44,5 @@ const createProduct =  (req, res) => {
     res.status(201).json(product);
   }
 
-  export default { controllerProduct } ;
-  export {updateProduct, updateProductPatch, deleteProduct, readProduct};
+  // export default { controllerProduct } ;
+  export {updateProduct, createProduct, updateProductPatch, deleteProduct, readProduct};
